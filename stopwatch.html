@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>Stop Watch = Elapsed Time + Clock</title>
+<script LANGUAGE="JavaScript" TYPE="text/javascript">
+<!--
+ var hr0, hr1, min0, min1, mend, mstart, sec0, sec1, x;
+ var end_time1, start_time0;
+ 
+ 
+function start_timer(f) {
+ var i = 1, today = new Date();
+ 
+ mstart = today.getTime();
+ hr0 = today.getHours();
+ x = (hr0 < 10) ? "0" + hr0: hr0;
+ start_time0 = x + ":";
+ min0 = today.getMinutes();
+ x = (min0 < 10) ? "0" + min0: min0;
+ start_time0 += "" + x + ":";
+ sec0 = today.getSeconds();
+ x = (sec0 < 10) ? "0" + sec0: sec0;
+ start_time0 += "" + x;
+ f.st1.value = start_time0;
+}
+ 
+function calc_elapsed_time(f) {
+ var i = 1, today = new Date();
+ var elapsed_time, msec;
+ 
+ mend = today.getTime();
+ hr1 = min1 = sec1 = 0;
+ x = today.getHours();
+ hr1 = (x < 10) ? "0" + x: x;
+ x = today.getMinutes();
+ min1 = (x < 10) ? "0" + x: x;
+ x = today.getSeconds();
+ sec1 = (x < 10) ? "0" + x: x;
+ end_time1 = hr1 + ':' + min1 + ':' + sec1;
+ f.et1.value = end_time1;
+ msec = mend - mstart;
+ f.etmsec.value = msec;
+ x = (msec % 1000);
+ elapsed_time = (msec - x) / 1000;
+ x = (x > 500) ? 1 : 0;
+ elapsed_time += x;
+ f.etsec.value = elapsed_time;
+ calc_day_hr_min_sec(f, elapsed_time);
+}
+ 
+function calc_day_hr_min_sec(f, ns) {
+ var d, h, m, s, hr, min, sec, tmp, x, ns;
+ 
+ d = h = m = s = xm = 0;
+ if (ns > 86399) {   // calculate days
+  x = (ns / 86400);
+  d = Math.floor(x);
+  ns -= (d * 86400);
+ }
+ if (ns > 3559) {    // calculate hrs
+  x = (ns / 3600);
+  h = Math.floor(x);
+  ns -= (h * 3600);
+ }
+ if (ns > 59) {      // calculate min
+  x = (ns / 60);
+  m = Math.floor(x);
+  ns -= (m * 60);
+ }
+ s = ns;
+ hr = (h < 10) ? '0' + h : h;
+ min = (m < 10) ? '0' + m : m;
+ sec = (s < 10) ? '0' + s : s;
+ f.dayhrminsec.value = d + " : " + hr + " : " + min + " : " + sec;
+}
+ 
+function reset_timer(f) {
+ hr0 = hr1 = min0 = min1 = mend = mstart = sec0 = sec1 = x = 0;
+ end_time1 = start_time0 = "";
+ f.st1.value = f.et1.value = f.etmsec.value = f.etsec.value = f.dayhrminsec.value = "";
+}
+ 
+function GetTime() {
+ var dt = new Date();
+ 
+ document.timevars.clock.value = IfZero(dt.getHours()) + ":" + IfZero(dt.getMinutes()) + ":" +  IfZero(dt.getSeconds());
+ timeooutID = setTimeout("GetTime()", 1000);
+}
+ 
+function IfZero(num) {
+ return ((num <= 9) ? ("0" + num) : num);
+}
+ 
+//-->
+</script>
+<head>
+ 
+<body alink="red" vlink="magenta" onLoad="GetTime()">
+<h2 align="center">Stop Watch = Elapsed Time + Clock</h2>
+<p>Calculates Elapsed Time in Days, Hours, Minutes and Seconds.
+<ul>
+<li>Click [Start Timer] button.</li>
+<li>Read these instructions while you wait a few seconds.</li>
+<li>Click [Calculate Elapsed Time] button.</li>
+<li>Continues to keep track of elapsed time until [Reset Timer] button is clicked.</li>
+<li>Update elapsed time by clicking [Calculate Elapsed Time] button as often as you want.</li>
+<li>Continues to keep track of correct elapsed time with change of hour and day.</li>
+</ul>
+<form name="timevars">
+<table bgcolor="#F2E8DE" width="1000">
+<tr>
+<td colspan="1">
+<input style="background: cyan; color: navy" type="button" Value="Start Timer" onClick="start_timer(timevars)">
+</td>
+<td colspan="2">
+<input style="background: cyan; color: navy" type="button" Value="Calculate Elapsed Time" onClick="calc_elapsed_time(timevars)">
+</td>
+<td colspan="1">
+<input style="background: lightgray; color: black" type="button" Value="Reset Timer" onClick="reset_timer(timevars)">
+</td>
+<td align="right">Clock: <input size="8" name="clock"></td>
+</tr>
+<tr>
+<td width="20%">Start time:</td>
+<td width="20%">End time:</td>
+<td width="20%">Elapsed time in Milliseconds:</td>
+<td width="20%">Elapsed time in Seconds:</td>
+<td width="20%">Elapsed time in<br>days : hours : minutes : seconds</td.
+</tr>
+<tr>
+<td width="20%"><input type="text" size="20" name="st1" readonly></td>
+<td width="20%"><input type="text" size="20" name="et1" value="" readonly></td>
+<td width="20%"><input type="text" size="20" name="etmsec" value="" readonly></td>
+<td width="20%"><input type="text" size="20" name="etsec" value="" readonly></td>
+<td width="20%"><input type="text" size="20" name="dayhrminsec" value="" readonly></td>
+</tr>
+</table>
+</form>
+<br>
+<p>Clock may not run until you put it on your own page and use the onLoad command in the &lt;body&gt; code. The Stop Watch/Elapsed Time timer works independent of the clock.</p>
+<h3>Stop Watch = Elapsed Time + Clock</h3>
+<script LANGUAGE="JavaScript" TYPE="text/javascript">
+<!--
+var Today = new Date();
+document.write("Copyright Â© 1996-" + Today.getFullYear() + ", ");
+//-->
+</script>
+<a href="http://www.rapidnet.com/~rernster/">Photo Enhancer</a> - All rights reserved -
+<script LANGUAGE="JavaScript" TYPE="text/javascript">
+<!--
+var pho = '<a href = "mail';
+var to  = 'to:';
+var en = 'enhancer';
+var ha = '@';
+var nce = 'rapidnet.com';
+var r = '?subject=pe:">';
+var photo = 'Email<\/a>';
+document.write(pho + to + en + ha + nce + r + photo);
+//-->
+</script>
+<br>
+</body>
+</html>
